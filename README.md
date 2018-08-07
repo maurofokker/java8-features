@@ -95,7 +95,7 @@
   // output: BiConsumer with method reference result for map -> {john=doe}
   ```
 
-### Predicate Functional Interface
+### Predicate<T> Functional Interface
 
 * Represents a predicate (boolean-valued function) of one argument as input
 * It functional method is `boolean test(T t);` that returns true if the input argument matches the predicate
@@ -117,4 +117,19 @@
     // output: true
     System.out.println(predicate.test(3));
     // output: false
+  ```
+
+### BiPredicate<T, U> Functional Interface
+
+* Accepts two argument and returns Boolean value
+* Apply business logic for the values passed as an argument and return the boolean value
+* It has 3 default methods
+  * `default BiPredicate<T, U> and(BiPredicate<? super T, ? super U> other)`
+  * `default BiPredicate<T, U> negate()`
+  * `default BiPredicate<T, U> or(BiPredicate<? super T, ? super U> other)`
+  ```java
+    // example of BiPredicate<T, U>
+    BiPredicate<Integer, String> ageGreaterThan21AndNameStartsWithJ = (age, name) -> age > 21 && name.startsWith("J");
+    System.out.println(ageGreaterThan21AndNameStartsWithJ.test(23, "John")); // true
+    System.out.println(ageGreaterThan21AndNameStartsWithJ.test(21, "John")); // false
   ```
