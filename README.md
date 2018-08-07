@@ -50,7 +50,7 @@
   * Supplier
 * Presents in the `java.util.function` package
 
-### Consumer Functional Interface
+### Consumer<T> Functional Interface
 
 * Consumer can be used in all contexts where an object needs to be consumed.
   * Object is taken as input and some operations are performed on the object without returning any result
@@ -74,4 +74,22 @@
     List<String> names = Arrays.asList("John", "Doe");
     names.forEach(consumer);
     // output: JOHN \n DOE
+  ```
+
+### BiConsumer<T, U> Functional Interface
+
+* It is an extension of `Consumer` functional interface
+* It accepts two parameters as input argument `void accept(T t, U u);` and returns nothing
+  * `accept` method performs the operation defined by BiConsumer
+
+  ```java
+    BiConsumer<String, String> biConsumer = (s1, s2) -> System.out.println("s1: " + s1.toUpperCase() + " - s2: " + s2.toUpperCase());
+    biConsumer.accept("john", "doe");
+    // output: s1: JOHN - s2: DOE
+  
+    Map<String, String> map = new HashMap<>();
+    BiConsumer<String, String> biConsumerMethodReference = map::put;
+    biConsumerMethodReference.accept("john", "doe");
+    System.out.println("BiConsumer with method reference result for map -> " + map);
+  // output: BiConsumer with method reference result for map -> {john=doe}
   ```
