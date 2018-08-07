@@ -22,6 +22,7 @@
     (   )   ->  {   }
   ```
   * `( )` input parameters passed to the lambda
+    * type is optional
   * `->` to separate input from method body
   * `{ }` contain the logic of what lambda is going to do with input parameters
     * optionals for single statement or expression
