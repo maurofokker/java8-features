@@ -49,6 +49,7 @@
   * Function
   * Supplier
 * Presents in the `java.util.function` package
+* Embrace code reuse
 
 ### Consumer<T> Functional Interface
 

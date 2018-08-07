@@ -1,5 +1,9 @@
 package com.maurofokker.java8.functionalinterfaces;
 
+import com.maurofokker.java8.data.Student;
+import com.maurofokker.java8.data.StudentDataBase;
+
+import java.util.List;
 import java.util.function.Predicate;
 
 public class PredicateDemo {
@@ -21,6 +25,18 @@ public class PredicateDemo {
         predicateAnd();
         predicateOr();
         predicateNegate();
+
+        // with students list
+        System.out.println("Test predicate in student list");
+        System.out.println("Students with grade level >= 3 and a gpa > 3");
+        Predicate<Student> studentPredicateGradeLevelGEThan3 = (student) -> student.getGradeLevel() >= 3;
+        Predicate<Student> studentPredicateGPAisGreaterThan3point9 = (student) -> student.getGpa() > 3.9;
+        List<Student> students = StudentDataBase.getAllStudents();
+        students.forEach( (student) -> {
+            if (studentPredicateGradeLevelGEThan3.and(studentPredicateGPAisGreaterThan3point9).test(student)) {
+                System.out.println(student);
+            }
+        });
 
     }
 
