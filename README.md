@@ -93,3 +93,27 @@
     System.out.println("BiConsumer with method reference result for map -> " + map);
   // output: BiConsumer with method reference result for map -> {john=doe}
   ```
+
+### Predicate Functional Interface
+
+* Represents a predicate (boolean-valued function) of one argument as input
+* It functional method is `boolean test(T t);` that returns true if the input argument matches the predicate
+* It has 3 default methods and 1 static method:
+  * `default Predicate<T> and(Predicate<? super T> other)`
+  * `default Predicate<T> negate()`
+  * `default Predicate<T> or(Predicate<? super T> other)`
+  * `static <T> Predicate<T> isEqual(Object targetRef)`
+* Typical use case of the Predicate lambda is to filter a collection of values
+* There are versions that receive primitive values
+  * IntPredicate
+  * DoublePredicate
+  * LongPredicate
+
+  ```java
+  // check even number
+    Predicate<Integer> predicate = (i) -> i%2 == 0;
+    System.out.println(predicate.test(8));
+    // output: true
+    System.out.println(predicate.test(3));
+    // output: false
+  ```
