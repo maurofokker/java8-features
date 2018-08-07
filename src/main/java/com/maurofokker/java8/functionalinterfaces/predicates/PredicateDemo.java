@@ -1,4 +1,4 @@
-package com.maurofokker.java8.functionalinterfaces;
+package com.maurofokker.java8.functionalinterfaces.predicates;
 
 import com.maurofokker.java8.data.Student;
 import com.maurofokker.java8.data.StudentDataBase;

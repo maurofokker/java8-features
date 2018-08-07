@@ -1,4 +1,4 @@
-package com.maurofokker.java8.functionalinterfaces;
+package com.maurofokker.java8.functionalinterfaces.consumers;
 
 import com.maurofokker.java8.data.Student;
 import com.maurofokker.java8.data.StudentDataBase;
