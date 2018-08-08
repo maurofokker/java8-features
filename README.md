@@ -223,3 +223,31 @@
   String helloWorld = helloWorldSupplier.get();
   System.out.println("String is: "+ helloWorld);
 ```
+
+## Method Reference
+
+* Since java 1.8
+* Simplify implementation of functional interfaces
+* Shortcut for writing lamda expressions
+* Refer to a method in a class
+* Syntax:
+  * `ClassName::instance-methodName`
+  * `ClassName::static-methodName`
+  * `Instance::methodName`
+  ```java
+    // using lambda
+    Function<String, String> toUpperCaseLambda = (s) -> s.toUpperCase();
+    // using method reference - ClassName::instance-methodName
+    Function<String, String> toUpperCaseMethodReference = String::toUpperCase;
+  ```
+* Method reference is not applicable where a logic is perform in lambda but in some cases can be refactored and extract to a method
+  ```java
+    // lambda expression
+    BiPredicate<Student, Integer> biPredicateUsingLambda = ((student, integer) -> student.getGradeLevel() >= integer);
+
+    // with method reference ... extracted method from biPredicateUsingLambda with intellij
+    static BiPredicate<Student, Integer> biPredicateUsingMethodReference = (PredicateMethodReferenceDemo::gradeLevelGreaterThan);
+    private static boolean gradeLevelGreaterThan(Student student, Integer integer) {
+      return student.getGradeLevel() >= integer;  
+    }
+  ```
