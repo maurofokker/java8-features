@@ -205,3 +205,21 @@
     BinaryOperator<Integer> max = BinaryOperator.maxBy(compareIntegers);
     System.out.println("Max between 3 and 4 is -> " + max.apply(3, 4) ); // output: 4
   ```
+
+### Supplier<T> Functional Interface
+
+* Since java 1.8
+* It is a Function specialization that does not take any arguments
+* Can be assigned in lambda expression
+* Can be passed as argument in different methods in java 1.8
+* Represents a supplier of results
+* There is no requirement that a new or distinct result be returned each time the supplier is invoked
+* Functional method is ` T get();`
+* Can implement a producer, typically used for lazy generation of values
+  * [java-8-lazy-argument-evaluation](https://blog.rapid7.com/2017/01/13/java-8-lazy-argument-evaluation/)
+  
+```java
+  Supplier<String> helloWorldSupplier = () -> new String("Hello, world!");
+  String helloWorld = helloWorldSupplier.get();
+  System.out.println("String is: "+ helloWorld);
+```
