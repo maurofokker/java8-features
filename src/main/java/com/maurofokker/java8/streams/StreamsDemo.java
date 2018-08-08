@@ -16,6 +16,7 @@ public class StreamsDemo {
 
         // map with student name key and student activities as value
         Map<String, List<String>> studentActivitiesMap = StudentDataBase.getAllStudents().stream()
+                                                                .peek(student -> System.out.println(student))
                                                                 .filter(studentGradeLevelGreaterEqualThan3)
                                                                 .collect(Collectors.toMap(Student::getName, Student::getActivities));
 

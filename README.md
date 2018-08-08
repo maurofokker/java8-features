@@ -354,3 +354,27 @@ public class Demo {
   // ["john", "jane"]
   ;
 ```
+
+### Collections vs Streams
+
+| Collections        | Streams           |
+| ------------- | ------------- |
+| can add or modify elements (`list.add(?)`)      | it is a fixed data set so it is not possible to add or modify elements |
+| can be accessed in any order (depend on methods of the collection `list.get(0)`)      | allow access to elements in sequence      |
+| is eagerly constructed | is lazily constructed      |
+| can be traversed _n_ number of times  | can be traversed only once when is consumed  |
+| performs external iteration to iterate through the elements `for (Item item: items)`  | performs internal iteration to iterate through the elements `items.stream().forEach()` |
+
+* [Stream javadoc](https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html#package.description)
+
+### Using peek() method to debug stream
+
+* This method exists mainly to support debugging, where you want to see the elements as they flow past a certain point in a pipeline
+```java
+  Stream.of("one", "two", "three", "four")
+    .filter(e -> e.length() > 3)
+    .peek(e -> System.out.println("Filtered value: " + e))
+    .map(String::toUpperCase)
+    .peek(e -> System.out.println("Mapped value: " + e))
+    .collect(Collectors.toList());
+```
