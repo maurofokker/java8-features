@@ -329,3 +329,17 @@ public class Demo {
     // it needs a constructor with 1 argument or it will complain
     Function<String, Student> studentFromNameFunction = Student::new;
   ```
+
+## Streams API
+
+* Since java 1.8
+* Main purpose is to perform some operation on Collections (List, Map ...)
+* Parallel operations are easy to perform without having to spawn a multiple threads
+* Can be used with Arrays or any other kind of I/O
+* Streams is a sequence of elements which can be `created` out of a collections (List, Arrays) or any kind of I/O resources
+* Streams operations can be performed either sequentially or parallel
+  ```java
+    List<String> names = Arrays.asList("john", "jane");
+    names.stream();  // create a stream
+    names.parallelStream(); // create a parallel stream
+  ```
