@@ -38,6 +38,60 @@
     }
   ``` 
 
+### Local variables in lambda
+
+* Any variable declared inside a method is called a local variable
+* Restrictions in lambda
+  * Not allowed to use the same local variable name as lambda parameter or inside a lambda body
+    ```java
+      public void someMethod() {
+        int i = 0;
+        
+        // compile error bc: Variable 'i' is already defined in the scope
+        // Consumer<Integer> consumer = i -> System.out.printLine("value is: " + i);
+        Consumer<Integer> consumer = x -> System.out.printLine("value is: " + x);
+      }
+    ```
+    
+    ```java
+      public void someMethod() {
+        int i = 0;
+              
+        // compile error bc: Variable 'i' is already defined in the scope
+        Consumer<Integer> consumer = x -> {
+          int i = 1;      // same variable in the method and lambda body
+          System.out.printLine("value is: " + x);
+        };
+      }    
+    ```
+  * Not allowed to re-assign a new value to a local variable in the lamda expression scope
+    ```java
+      public void someMethod() {
+        int i = 0;
+              
+        // compile error bc: Variable used in lambda expression should be final or effectively final
+        Consumer<Integer> consumer = x -> {
+          i++; // here is the compilation error
+          System.out.printLine("value is: " + (i + x));
+        };
+      }    
+    ```
+* No restrictions associated to instance variables in lambda (it is allowed to modify values of instances variables and static variables)
+```java
+public class Demo {
+    static int value = 1;
+    
+    public void someMethod() {
+      Consumer<Integer> consumer = x -> {
+        value++; // it is ok to modify static variable or instance variable
+        System.out.printLine("value is: " + (value + x)); 
+      }; 
+      consumer.accept(2);
+    }
+}
+```
+
+
 ## Functional Interfaces
 
 * Exists since java 1.0
