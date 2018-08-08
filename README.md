@@ -251,3 +251,19 @@
       return student.getGradeLevel() >= integer;  
     }
   ```
+
+## Constructor Reference
+
+* Since java 1.8
+* Syntax:
+  * `ClassName::new` it need to have an empty constructor
+  ```java
+    // require empty constructor in object
+    Supplier<Student> studentSupplier = Student::new;
+
+    // compilation error on objects
+    // Student student = Student::new;
+  
+    // it needs a constructor with 1 argument or it will complain
+    Function<String, Student> studentFromNameFunction = Student::new;
+  ```
