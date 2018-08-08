@@ -133,3 +133,43 @@
     System.out.println(ageGreaterThan21AndNameStartsWithJ.test(23, "John")); // true
     System.out.println(ageGreaterThan21AndNameStartsWithJ.test(21, "John")); // false
   ```
+
+### Function<T, R> Functional Interface
+
+* Introduced as part of java 1.8
+* Can implement a function (method) and assign to a variable
+* It functional method is `R apply(T t);` computes the result of type R of applying the function to the input argument of type T
+* It has 2 default methods
+  * `default <V> Function<V, R> compose(Function<? super V, ? extends T> before)`
+  * `default <V> Function<T, V> andThen(Function<? super R, ? extends V> after)`
+```java
+  // T t: input type String, R r: output type String but uppercase
+  Function<String, String> takesNameAndReturnNameInUpperCase = (name) -> name.toUpperCase();
+  System.out.println("Result of apply to function : " + takesNameAndReturnNameInUpperCase.apply("john"));
+  // output: Result of apply to function : JOHN
+  Function<String, String> prefixGreeting = (name) -> "Hello, ".concat(name.toLowerCase());
+  System.out.println("Result of _andThen_ default method : " + takesNameAndReturnNameInUpperCase.andThen(prefixGreeting).apply("John"));
+  // apply first takesNameAndReturnNameInUpperCase function -> JOHN
+  // and after apply andThen prefixGreeting -> Hello, john 
+  // output: Result of _andThen_ default method : Hello, john
+  System.out.println("Result of _compose_ default method : " + takesNameAndReturnNameInUpperCase.compose(prefixGreeting).apply("John"));
+  // first apply prefixGreeting function inside of COMPOSE -> Hello, john
+  // and after apply takesNameAndReturnNameInUpperCase to that result -> HELLO, JOHN
+  // output: Result of _compose_ default method : HELLO, JOHN
+```
+
+### BiFunction<T, U, R> Functional Interface
+
+* Represents a function that accepts two arguments of type `T` and `U` and produces a result of type `R`
+* Is the two-arity specialization of Function
+* It functional method is `R apply(T t, U u);`
+* It has a default method `default <V> BiFunction<T, U, V> andThen(Function<? super R, ? extends V> after)`
+  ```java
+    BiFunction<String, String,String> bi = (x, y) -> {      
+      return x + y;
+    };
+
+    System.out.println(bi.apply("Hello, ", "John"));
+    // output: Hello, John
+  ```
+  

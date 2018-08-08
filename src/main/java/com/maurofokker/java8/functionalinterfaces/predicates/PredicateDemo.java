@@ -13,6 +13,9 @@ public class PredicateDemo {
     // divisible by 5
     static Predicate<Integer> predicate2 = (integer -> integer%5 == 0);
 
+    public static Predicate<Student> studentPredicateGradeLevelGEThan3 = (student) -> student.getGradeLevel() >= 3;
+    public static Predicate<Student> studentPredicateGPAisGreaterThan3point9 = (student) -> student.getGpa() > 3.9;
+
     public static void main(String[] args) {
 
         // check even number
@@ -29,8 +32,7 @@ public class PredicateDemo {
         // with students list
         System.out.println("Test predicate in student list");
         System.out.println("Students with grade level >= 3 and a gpa > 3");
-        Predicate<Student> studentPredicateGradeLevelGEThan3 = (student) -> student.getGradeLevel() >= 3;
-        Predicate<Student> studentPredicateGPAisGreaterThan3point9 = (student) -> student.getGpa() > 3.9;
+
         List<Student> students = StudentDataBase.getAllStudents();
         students.forEach( (student) -> {
             if (studentPredicateGradeLevelGEThan3.and(studentPredicateGPAisGreaterThan3point9).test(student)) {
