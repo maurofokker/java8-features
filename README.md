@@ -343,3 +343,14 @@ public class Demo {
     names.stream();  // create a stream
     names.parallelStream(); // create a parallel stream
   ```
+
+* Stream pipeline has intermediate operations that returns a Stream and a terminal operator that can return a Collection or a Stream or some value
+```java
+  List<String> names = Arrays.asList("john", "jane", "bill");
+  names.stream()                        // output: Stream<String>
+         .filter(s -> s.startsWith("j"))         // output: Stream<String> is an intermediate operation
+         .collect(Collectors.toList())  // output: List<String> is the terminal operation
+                                        // intermediate operations would not happened without the terminal operation
+  // ["john", "jane"]
+  ;
+```
