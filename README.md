@@ -76,6 +76,7 @@
         };
       }    
     ```
+    
 * No restrictions associated to instance variables in lambda (it is allowed to modify values of instances variables and static variables)
 ```java
 public class Demo {
@@ -91,6 +92,13 @@ public class Demo {
 }
 ```
 
+### Effectively Final variables
+
+* Are called like effectively lambda, because lambdas can use local variables but can not modify them even though they are not declared final
+* Prior to java 8 variables inside anonymous classes should be mark as final explicitly
+* Advantages of effectively final:
+  * Easy to perform concurrent operations
+  * Promotes functional programming and demotes the imperative style of programming
 
 ## Functional Interfaces
 
