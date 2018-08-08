@@ -172,4 +172,36 @@
     System.out.println(bi.apply("Hello, ", "John"));
     // output: Hello, John
   ```
-  
+
+### UnaryOperator<T> Functional Interface
+
+* Introduced in java 1.8 
+* Can be used as lambda expression to pass as an argument
+* Extends `Function<T, T>`
+* Represents an operation on a single operand that produces a result of the same type as its operand
+```java
+  UnaryOperator<String> toUpperCaseUnaryOperator = (s -> s.toUpperCase());
+  List<String> names = Arrays.asList("John", "Jane", "Freddy");
+  names.forEach(name -> System.out.println(toUpperCaseUnaryOperator.apply(name)));
+  // output: JOHN \n JANE \n FREDDY
+```
+
+### BinaryOperator<T> Functional Interface
+
+* Can be used as lambda expression to pass as an argument
+* Extends `BiFunction<T,T,T>`
+* Accepts two operands of the same type and process it and then returns results of the same type as operands
+* It has two static methods
+  * `public static <T> BinaryOperator<T> minBy(Comparator<? super T> comparator)` which returns lesser of two elements
+  * `public static <T> BinaryOperator<T> maxBy(Comparator<? super T> comparator)` which returns greater of two elements
+  ```java
+    // to test minBay and maxBy static methods of BinaryOperator a Comparator must be declare bc is the argument they accept
+    Comparator<Integer> compareIntegers = (a, b) -> a.compareTo(b);
+    // minBy
+    BinaryOperator<Integer> min = BinaryOperator.minBy(compareIntegers);
+    System.out.println("Min between 3 and 4 is -> " + min.apply(3, 4) ); // output: 3
+
+    // maxBy
+    BinaryOperator<Integer> max = BinaryOperator.maxBy(compareIntegers);
+    System.out.println("Max between 3 and 4 is -> " + max.apply(3, 4) ); // output: 4
+  ```
