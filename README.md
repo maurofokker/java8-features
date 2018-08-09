@@ -476,3 +476,18 @@ public class Demo {
                 ;
     }
   ```
+* Customized `sorted` with `Comparator`
+  * Returns a stream consisting of the elements of this stream, sorted according to the provided `Comparator`
+  * For ordered streams, the sort is stable.  For unordered streams, no stability guarantees are made.
+  * It is a stateful intermediate operation
+  * `Stream<T> sorted(Comparator<? super T> comparator)`
+  ```java
+    public static List<Student> sortStudentsByName() {
+        return StudentDataBase.getAllStudents()
+                .stream()
+                // Comparator<Student> comparing(Function<Student, Student> keyExtractor)
+                .sorted(Comparator.comparing(Student::getName))
+                .collect(Collectors.toList())
+                ;
+    }
+  ```
