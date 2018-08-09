@@ -509,3 +509,68 @@ public class Demo {
                 .collect(Collectors.toList());
     }
   ```
+
+### Operation: reduce()
+* `T reduce(T identity, BinaryOperator<T> accumulator);`
+  * Performs a reduction on the elements of this stream, using the provided identity value and 
+    an associative accumulation function, and returns the reduced value
+  * It is a terminal operation
+  * `Sum`, `min`, `max`, `average`, and string concatenation are all special cases of reduction
+  * Reduction operations parallelize more gracefully, without needing additional synchronization 
+    and with greatly reduced risk of data races
+  ```java
+    public static final int performMultiplication(List<Integer> integers) {
+            return integers.stream()
+                    // 23
+                    // 43
+                    // 56
+                    // 97
+                    // 32
+                    // reduce(T identity, BinaryOperator<T> accumulator);`
+                    // a=identity initial value
+                    // a=1, b=23 => result 23
+                    // a=23, b=43 => r = 989
+                    // a= previous result, b=next in stream
+                    // output 171911936
+                    .reduce(1, (a,b) -> a*b)
+                    ;  
+    }
+  ```
+    
+* `Optional<T> reduce(BinaryOperator<T> accumulator);`
+  * Performs a reduction on the elements of this stream, using an associative accumulation
+    function, and returns an `Optional` describing the reduced value, if any
+  * The accumulation function must be associative
+  * It is not constrained to run sequentially
+  * It is a terminal operation
+  ```java
+    public static final Optional<Integer> performMultiplicationWithoutIdentity(List<Integer> integers) {  
+      return integers.stream()
+        .reduce((a,b) -> a*b)
+        // Optional<T> reduce(BinaryOperator<T> accumulator);`
+      ;  
+    }
+    public static void main(String[] args) {  
+      System.out.println("---- integer multiplication with reduce withot identity ----");
+      Optional<Integer> result = performMultiplicationWithoutIdentity(integers);
+      System.out.println(result.isPresent()); // return boolean
+      System.out.println(result.get()); // return actual value
+    }
+  ```
+
+* `<U> U reduce(U identity, BiFunction<U, ? super T, U> accumulator, BinaryOperator<U> combiner);`
+  * Performs a reduction on the elements of this stream, using the provided identity, accumulation and
+    combining functions
+  * It is not constrained to run sequentially
+  * It is a terminal operation
+  * Many reductions using this form can be represented more simply by an explicit combination of `map` 
+    and `reduce` operations. The `accumulator` function acts as a fused mapper and accumulator,
+    which can sometimes be more efficient than separate mapping and reduction, such as when knowing 
+    the previously reduced value allows you to avoid some computation.
+  ```java
+    public static void main(String[] args) {
+      List<Integer> list2 = Arrays.asList(5, 6, 7);
+      int res = list2.parallelStream().reduce(1, (s1, s2) -> s1 * s2, (p, q) -> p * q);
+      System.out.println(res);
+    }
+  ```
