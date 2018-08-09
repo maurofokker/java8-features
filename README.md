@@ -378,3 +378,20 @@ public class Demo {
     .peek(e -> System.out.println("Mapped value: " + e))
     .collect(Collectors.toList());
 ```
+
+### Operation: map()
+
+* It is not the `Map` collection
+* It is used to convert (transform) one type to another
+* Returns a stream consisting of the results of applying the given function to the elements of this stream.
+  * `java <R> Stream<R> map(Function<? super T, ? extends R> mapper);`
+* It is an intermediate operation in the pipeline
+```java
+  List<String> studentsName = StudentDataBase.getAllStudents()
+                                .stream()                       // Stream<Student>
+                                // Function input Student -> Function output String (getName())
+                                // Stream<String> map(Function<Student, String> mapper);
+                                .map(Student::getName)          // Stream<String>
+                                .collect(Collectors.toList())   // List<String>
+                                ;
+```
