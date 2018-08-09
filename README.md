@@ -395,3 +395,31 @@ public class Demo {
                                 .collect(Collectors.toList())   // List<String>
                                 ;
 ```
+
+### Operation: flatMap()
+
+* It is used to convert (transform) one type to another as like `map()` method
+* Returns a stream consisting of the results of replacing each element of this stream with the contents of a mapped stream 
+  produced by applying the provided mapping function to each element
+  * `<R> Stream<R> flatMap(Function<? super T, ? extends Stream<? extends R>> mapper);`
+* Used in the context of Streams where each element in the Stream represents multiple elements
+  * `Stream<List>`
+  * `Stream<Set>`
+  * `Stream<Arrays>`
+```java
+  Stream<String> lines = Files.lines(path, StandardCharsets.UTF_8);
+  Stream<String> words = lines.flatMap(line -> Stream.of(line.split(" +")));
+```
+  * The `mapper` function passed to `flatMap` splits a line, using a simple regular expression, into an array of words, 
+    and then creates a stream of words from that array
+```java
+    public static List<String> studentsActivities() {
+        return StudentDataBase.getAllStudents()
+                .stream()                       // Stream<Student>
+                .map(Student::getActivities)    // Stream<List<String>>
+                // Stream<String> flatMap(Function<List<Student>, String> mapper);
+                .flatMap(List::stream)          // Stream<String>
+                .collect(Collectors.toList())   // List<String>
+                ;
+    }
+```
