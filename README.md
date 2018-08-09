@@ -491,3 +491,21 @@ public class Demo {
                 ;
     }
   ```
+
+### Operation: filter()
+
+* Filter the elements in the stream
+* Returns a stream consisting of the elements of this stream that match the given predicate
+* It is an intermediate operation
+* `Stream<T> filter(Predicate<? super T> predicate);`
+  ```java
+    public static List<Student> filterStudentsByGender(String gender) {
+        return StudentDataBase.getAllStudents()
+                .stream()
+                // filter(Predicate<Student> predicate)
+                // if gender is find then go to the next step in pipeline
+                .filter(student -> student.getGender().equalsIgnoreCase(gender))
+                .sorted(Comparator.comparing(Student::getName))
+                .collect(Collectors.toList());
+    }
+  ```
