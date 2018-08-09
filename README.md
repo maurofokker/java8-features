@@ -423,3 +423,56 @@ public class Demo {
                 ;
     }
 ```
+
+### Operations: distinct() - count() - sorted()
+
+* `distinct()`
+  * Returns a stream consisting of the distinct elements of this stream
+  * For ordered streams, the selection of distinct elements is stable (for duplicated elements, the element 
+    appearing first in the encounter order is preserved.) For unordered streams, no stability guarantees are made
+  * It is a stateful intermediate operation
+  * `Stream<T> distinct();`
+  ```java
+    public static List<String> uniqueStudentsActivities() {
+        return StudentDataBase.getAllStudents()
+                .stream()                       // Stream<Student>
+                .map(Student::getActivities)    // Stream<List<String>>
+                .flatMap(List::stream)          // Stream<String>
+                .distinct()                     // Stream<String>
+                .collect(Collectors.toList())   // List<String>
+                ;
+    }
+  ```
+* `count()`
+  * Returns a `long` with the total number of elements in the Stream
+  * It is a terminal operation
+  * `long count();`
+  ```java
+    public static long countUniqueStudentsActivities() {
+        return StudentDataBase.getAllStudents()
+                .stream()                       // Stream<Student>
+                .map(Student::getActivities)    // Stream<List<String>>
+                .flatMap(List::stream)          // Stream<String>
+                .distinct()                     // Stream<String>
+                .count()                        // returns long
+                ;
+    }
+  ```
+* `sorted()`
+  * Returns a stream consisting of the elements of this stream, sorted according to natural order.  
+    If the elements of this stream are not `Comparable`, a `ClassCastException` may be thrown when the terminal operation is executed.
+  * For ordered streams, the sort is stable.  For unordered streams, no stability guarantees are made.
+  * It is a stateful intermediate operation
+  * `Stream<T> sorted();`
+  ```java
+    public static List<String> sortedUniqueStudentsActivities() {
+        return StudentDataBase.getAllStudents()
+                .stream()                       // Stream<Student>
+                .map(Student::getActivities)    // Stream<List<String>>
+                .flatMap(List::stream)          // Stream<String>
+                .distinct()                     // Stream<String>
+                .sorted()                       // Stream<String>
+                .collect(Collectors.toList())   // List<String>
+                ;
+    }
+  ```

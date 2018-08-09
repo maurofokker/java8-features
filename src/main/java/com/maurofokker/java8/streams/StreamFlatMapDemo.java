@@ -11,6 +11,14 @@ public class StreamFlatMapDemo {
 
     public static void main(String[] args) {
         System.out.println(studentsActivities());
+
+        System.out.println("distinct activities");
+        System.out.println(uniqueStudentsActivities());
+        System.out.println("count of distinct activities = " + countUniqueStudentsActivities());
+        System.out.println("----------- sorted students activities -----------");
+        System.out.println(sortedStudentsActivities());
+        System.out.println("----------- sorted unique students activities -----------");
+        System.out.println(sortedUniqueStudentsActivities());
     }
 
     public static List<String> studentsActivities() {
@@ -23,5 +31,49 @@ public class StreamFlatMapDemo {
                 ;
     }
 
+    public static List<String> sortedStudentsActivities() {
+        return StudentDataBase.getAllStudents()
+                .stream()                       // Stream<Student>
+                .map(Student::getActivities)    // Stream<List<String>>
+                // Stream<String> flatMap(Function<List<Student>, String> mapper);
+                .flatMap(List::stream)          // Stream<String>
+                .sorted()                       // Stream<String>
+                .collect(Collectors.toList())   // List<String>
+                ;
+    }
+
+    public static List<String> uniqueStudentsActivities() {
+        return StudentDataBase.getAllStudents()
+                .stream()                       // Stream<Student>
+                .map(Student::getActivities)    // Stream<List<String>>
+                // Stream<String> flatMap(Function<List<Student>, String> mapper);
+                .flatMap(List::stream)          // Stream<String>
+                .distinct()                     // Stream<String>
+                .collect(Collectors.toList())   // List<String>
+                ;
+    }
+
+    public static List<String> sortedUniqueStudentsActivities() {
+        return StudentDataBase.getAllStudents()
+                .stream()                       // Stream<Student>
+                .map(Student::getActivities)    // Stream<List<String>>
+                // Stream<String> flatMap(Function<List<Student>, String> mapper);
+                .flatMap(List::stream)          // Stream<String>
+                .distinct()                     // Stream<String>
+                .sorted()                       // Stream<String>
+                .collect(Collectors.toList())   // List<String>
+                ;
+    }
+
+    public static long countUniqueStudentsActivities() {
+        return StudentDataBase.getAllStudents()
+                .stream()                       // Stream<Student>
+                .map(Student::getActivities)    // Stream<List<String>>
+                // Stream<String> flatMap(Function<List<Student>, String> mapper);
+                .flatMap(List::stream)          // Stream<String>
+                .distinct()                     // Stream<String>
+                .count()                        // returns long
+                ;
+    }
 
 }
