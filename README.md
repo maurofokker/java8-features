@@ -574,3 +574,29 @@ public class Demo {
       System.out.println(res);
     }
   ```
+
+### Operation: limit()
+
+* Returns a stream consisting of the elements of this stream, truncated to be no longer than `maxSize` in length.
+  * In other words creates a sub-stream
+* It is short-circuiting stateful intermediate operation
+* Generally a cheap operation on sequential stream pipelines
+* It can be quite expensive on ordered parallel pipelines, especially for large values of `maxSize`, since `limit(n)` 
+  is constrained to return not just any `n` elements, but the `first n`elements in the encounter order
+* In unordered streams may result in significant speedups of `limit()` in parallel pipelines
+* `Stream<T> limit(long maxSize);`
+```java
+    public static void main(String[] args) {
+        List<Student> students = StudentDataBase.getAllStudents()
+                .stream()
+                .limit(2)
+                .collect(Collectors.toList());
+        students.forEach(System.out::println);
+
+        Optional<Integer> sumOf2FirstNumberInList = Arrays.asList(23,43,56,97,32)
+                                .stream()
+                                        .limit(2)
+                                        .reduce((a,b)-> a+b);
+        System.out.println("sumOf2FirstNumberInList " + (sumOf2FirstNumberInList.isPresent() ? sumOf2FirstNumberInList.get() : "")); // 66
+    }
+```
