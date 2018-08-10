@@ -600,3 +600,33 @@ public class Demo {
         System.out.println("sumOf2FirstNumberInList " + (sumOf2FirstNumberInList.isPresent() ? sumOf2FirstNumberInList.get() : "")); // 66
     }
 ```
+
+### Operation: skip()
+
+* Returns a stream consisting of the remaining elements of this stream after discarding the first `n` elements of the stream
+* If this stream contains fewer than `n` elements then an empty stream will be returned
+* Is is a stateful intermediate operation
+* Generally a cheap operation on sequential stream pipelines 
+* It can be quite expensive on ordered parallel pipelines
+* Speedups in unordered lists for parallel pipelines
+* `Stream<T> skip(long n);`
+
+```java
+    public static void main(String[] args) {
+  
+          Optional<Integer> sumLastThirdNumbersInList = Arrays.asList(23,43,56,97,32)
+                  .stream()
+                  .skip(2)
+                  .reduce((a,b)-> a+b);
+          System.out.println("sumOf2FirstNumberInList " + (sumLastThirdNumbersInList.isPresent() ? sumLastThirdNumbersInList.get() : ""));
+          // 185
+  
+          Optional<Integer> sumThirdAndFourthNumbersInList = Arrays.asList(23,43,56,97,32)
+                  .stream()
+                  .skip(2)
+                  .limit(2)
+                  .reduce((a,b)-> a+b);
+          System.out.println("sumOf2FirstNumberInList " + (sumThirdAndFourthNumbersInList.isPresent() ? sumThirdAndFourthNumbersInList.get() : ""));
+          // 153
+    }
+```
