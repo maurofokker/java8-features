@@ -3,7 +3,6 @@ package com.maurofokker.java8.streams;
 import com.maurofokker.java8.data.Student;
 import com.maurofokker.java8.data.StudentDataBase;
 
-import javax.swing.text.html.Option;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +18,10 @@ public class StreamReduceDemo {
         Optional<Integer> result = performMultiplicationWithoutIdentity(integers);
         System.out.println(result.isPresent()); // return boolean
         System.out.println(result.get()); // return actual value
+        System.out.println("---- max value ----");
+        System.out.println(maxValueInList(integers).get());
+        System.out.println("---- min value ----");
+        System.out.println(minValueInList(integers).get());
         System.out.println(" ---- highest gpa student ----");
         Optional<Student> student = getHighestGpaStudent();
         if (student.isPresent())
@@ -45,6 +48,24 @@ public class StreamReduceDemo {
         return integers.stream()
                 .reduce((a,b) -> a*b)
                 // Optional<T> reduce(BinaryOperator<T> accumulator);`
+                ;
+    }
+
+    public static final Optional<Integer> maxValueInList(List<Integer> integers) {
+        return integers.stream()
+                // using T reduce(T identity, BinaryOperator<T> accumulator)
+                // values in stream take variable 'b' and 'a' the max value in the iteration
+                //.reduce(0, (a, b) -> a > b ? a : b)  // for empty list will return 0 that is wrong
+                // using Optional<T> reduce(BinaryOperator<T> accumulator)
+                .reduce(Integer::max)
+                ;
+    }
+
+    public static final Optional<Integer> minValueInList(List<Integer> integers) {
+        return integers.stream()
+                // using Optional<T> reduce(BinaryOperator<T> accumulator)
+                //.reduce((a, b) -> a < b ? a : b)
+                .reduce(Integer::min)
                 ;
     }
 
