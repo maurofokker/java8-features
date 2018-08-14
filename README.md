@@ -630,3 +630,33 @@ public class Demo {
           // 153
     }
 ```
+
+### Operation: anyMatch() - allMatch() - noneMatch
+
+* Operations that takes a `Predicate` as an input and returns a `Boolean` as an output
+* Returns whether any elements of this stream match the provided predicate.  
+* May not evaluate the predicate on all elements if not necessary for determining the result  
+* If the stream is _empty_ then `false` is returned and the predicate is not evaluated
+* It is a short-circuit terminal operation
+
+* `anyMatch()`
+  * for some x P(x): true if any of the elements in the stream matches the predicate, otherwise false
+  * `boolean anyMatch(Predicate<? super T> predicate);`
+* `allMatch()`
+  * for all x P(x): true if all of the elements in the stream matches the predicate, otherwise false
+  * `boolean allMatch(Predicate<? super T> predicate);`
+* `noneMatch()`
+  * for all x ~P(x): true if none of the elements in the stream matches the predicate, otherwise false
+  * `boolean noneMatch(Predicate<? super T> predicate);`
+
+```java
+    public static void main(String[] args) {
+        List<Integer> numbers = Arrays.asList(2, 4, 6, 8, 10, 12);
+        boolean anyMatch = numbers.stream().anyMatch(x -> x % 2 == 0);
+        boolean allMatch = numbers.stream().allMatch(x -> x % 2 == 0);
+        boolean noneMatch = numbers.stream().noneMatch(x -> x % 2 == 0);
+        System.out.println("Result of anyMatch : " + anyMatch);             // true
+        System.out.println("Result of allMatch : " + allMatch);             // true
+        System.out.println("Result of noneMatch : " + noneMatch);           // false
+    }
+```
