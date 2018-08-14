@@ -660,3 +660,23 @@ public class Demo {
         System.out.println("Result of noneMatch : " + noneMatch);           // false
     }
 ```
+
+### Operation: findFirst() - findAny()
+
+* Used to find an element in the stream
+* Both returns an Optional with the element `Optional<T>`
+* Difference between both is when the stream is run in parallel
+* Are terminal operations
+* `findFirst()` returns first element find in the stream
+* `findAny()` returns the first encountered element in the stream
+  * This is to allow for maximal performance in parallel operations; the cost is that multiple invocations 
+    on the same source may not return the same result.  (If a stable result is desired, use `findFirst()` instead
+```java
+    public static List<Student> filterStudentsByGender(String gender) {
+        return StudentDataBase.getAllStudents()
+                .stream()
+                .filter(student -> student.getGender().equalsIgnoreCase(gender))
+                .sorted(Comparator.comparing(Student::getName))
+                .findAny();
+    }  
+```
