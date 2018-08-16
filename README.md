@@ -713,3 +713,20 @@ public class Demo {
                       .limit(10)                  // limit the iteration
                       .forEach(System.out::println);
       ```
+
+## Numeric Stream - IntStream API
+ 
+* A sequence of primitive int-valued elements supporting sequential and parallel aggregate operations.  
+* This is the `int` primitive specialization of `Stream`
+* Aggregate operation using `Stream`
+  ```java
+    List<Integer> integerList = Arrays.asList(1,2,3,4,5,6);
+    int sumOfNumbers = integerList.stream() // Stream<Integer>
+                    .reduce(0,(x,y)->x+y); // unboxing to convert Integer to an int in order to do the sum of numbers
+  ```
+* Aggregate operation using `Stream`
+  ```java
+    int sumOfNumbers = IntStream
+                          .rangeClosed(1,6)  // IntStream
+                          .sum(); // saves the unboxing effort.
+  ```
