@@ -680,3 +680,36 @@ public class Demo {
                 .findAny();
     }  
 ```
+
+### Operation: of() - generate() and iterate()
+
+* Are Factory Methods
+* `of()`
+  * Creates a stream of certain values 
+  * `static<T> Stream<T> of(T t)` and `static<T> Stream<T> of(T... values)`
+    ```java
+      Stream<String> streamOfStrings = Stream.of("john", "doe");
+    ```
+* `generate()`
+  * Allow to create infinite sequential ordered stream
+  * `static<T> Stream<T> iterate(final T seed, final UnaryOperator<T> f)`
+    * `seed` is the initial element
+    * `f` a function to be applied to to the previous element to produce a new element
+      ```java
+        // initial value is 1, and is multiplied by 2
+        // x is previous value (obtained in the multiplication)
+        Stream.iterate(1, x -> x*2)   // infinite iteration
+                .limit(10)                  // limit the iteration
+                .forEach(System.out::println);
+      ```
+* `iterate()`
+  * Allow to create infinite sequential unordered stream (i.e. for streams of random elements)
+  * `static<T> Stream<T> generate(Supplier<T> s)`
+    * `s` the `Supplier` of generated elements
+      ```java
+        // create a Supplier to generate random values
+        Supplier<Integer> integerSupplier = new Random()::nextInt;
+        Stream.generate(integerSupplier)
+                      .limit(10)                  // limit the iteration
+                      .forEach(System.out::println);
+      ```
