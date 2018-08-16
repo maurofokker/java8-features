@@ -714,7 +714,7 @@ public class Demo {
                       .forEach(System.out::println);
       ```
 
-## Numeric Stream - IntStream API
+## Numeric Streams
  
 * A sequence of primitive int-valued elements supporting sequential and parallel aggregate operations.  
 * This is the `int` primitive specialization of `Stream`
@@ -730,3 +730,23 @@ public class Demo {
                           .rangeClosed(1,6)  // IntStream
                           .sum(); // saves the unboxing effort.
   ```
+
+### Operation: range() - rangeClosed()
+
+* Both methods are included in `IntStream` and `LongStream` API
+* `DoubleStream` API does not include these methods but it can be performed through `[Int|Long]Stream` using `asDoubleStream()`
+  method after `range()` or `rangeClosed()`
+* `range(int startInclusive, int endExclusive)`
+  * Returns a sequential ordered `IntStream` from `startInclusive` (inclusive) to `endExclusive` (exclusive) 
+    by an incremental step of `1`
+  * An equivalent sequence of increasing values can be produced sequentially using a `for` loop
+    ```java
+      IntStream.range(1,50) // return from 1 to 49 (49 elements)
+    ``` 
+* `rangeClosed(int startInclusive, int endInclusive)`
+  * Returns a sequential ordered `IntStream` from `startInclusive` (inclusive) to `endInclusive` (inclusive) 
+    by an incremental step of `1`
+  * An equivalent sequence of increasing values can be produced sequentially using a `for` loop
+    ```java
+      IntStream.rangeClosed(1,50) // return from 1 to 50 inclusive (50 elements)
+    ```
