@@ -798,3 +798,33 @@ public class Demo {
     Arrays.asList(1, 2, 3, 4, 5).stream()
                     .mapToInt(Integer::intValue).sum();
   ```
+
+### Operations: mapToObj() - mapToLong and mapToDouble()
+
+* `mapToObj()` convert each element in numeric stream to some `Object`
+* `mapToLong()` convert each element in a numeric stream to a `LongStream`
+* `mapToDouble` convert each element in a numeric stream to a `DoubleStream`
+
+```java
+    public static List<Integer> mapToObject() {
+        return IntStream.rangeClosed(1, 10)
+                .mapToObj(i -> {return new Integer(i);}) // create Integer with value of i
+                .collect(Collectors.toList());
+    }
+
+    public static long mapToLong() {
+        return IntStream.rangeClosed(1, 10) // generate IntStream
+                // i is passed from the IntStream
+                .mapToLong(i -> i) // convert IntStream to LongStream
+                .sum();
+
+    }
+
+    public static double mapToDouble() {
+        return IntStream.rangeClosed(1, 10) // generate IntStream
+                // i is passed from the IntStream
+                .mapToDouble(i -> i) // convert IntStream to DoubleStream
+                .sum();
+
+    }
+```
