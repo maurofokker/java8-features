@@ -812,6 +812,32 @@ public class Demo {
     System.out.println("Mapping students names to set of String : " + mapsStudentsNamesToSet);
   ```
 
+#### Operation: Collectors.minBy() and Collectors.maxBy()
+
+* Receives a `Comparator` as an input and produces an Optional as an output
+* `maxBy()` collector is used in conjunction with Comparator and returns the max element based on the 
+  property passed to the comparator
+  * `public static <T> Collector<T, ?, Optional<T>> maxBy(Comparator<? super T> comparator)`
+  ```java
+    public static Optional<Student> maxByGpa() {
+        return StudentDataBase.getAllStudents()
+                .stream()
+                .collect(Collectors.maxBy(Comparator.comparing(Student::getGpa)))
+                ;
+    }
+  ```
+* `minBy()` collector is used in conjunction with Comparator and returns the smallest element based on the 
+  property passed to the comparator 
+  * `public static <T> Collector<T, ?, Optional<T>> minBy(Comparator<? super T> comparator)`
+  ```java
+    public static Optional<Student> minByGpa() {
+        return StudentDataBase.getAllStudents()
+                .stream()
+                .collect(Collectors.minBy(Comparator.comparing(Student::getGpa)))
+                ;
+    }
+  ```
+
 ## Numeric Streams
  
 * A sequence of primitive int-valued elements supporting sequential and parallel aggregate operations.  
