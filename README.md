@@ -772,3 +772,29 @@ public class Demo {
   * It is a terminal operation
   * Returns an `OptionalDouble` describing the arithmetic mean of elements of this stream, 
     or an empty optional if this stream is empty. This is the same for `IntStream`, `LongStream` and `DoubleStream`  
+
+### Operations to boxing and unboxing
+
+* `Boxing` when a primitive is wrapped in an object
+  * int -> Integer
+  * long -> Long
+  * double -> Double
+* `Unboxing` when a wrapper object is passed to a primitive value
+  * Integer -> int
+  * Double -> double
+  * Long -> long
+* `boxing` is possible using `boxed()` method in `IntStream`, `LongStream` and `DoubleStream` that will return a 
+  `Stream<Integer>`, `Stream<Long>` and `Stream<Double>` respectively
+  ```java
+    return IntStream.rangeClosed(1,25)
+                    // int values
+                    .boxed() // to Stream<Integer>
+                    // to List of Integer
+                    .collect(Collectors.toList());
+  ```
+* `unboxing` is possible through methods `mapToInt`, `mapToLong` and `mapToDouble` that will return  
+   a `IntStream`, `LongStream` and `DoubleStream` respectively
+  ```java
+    Arrays.asList(1, 2, 3, 4, 5).stream()
+                    .mapToInt(Integer::intValue).sum();
+  ```
