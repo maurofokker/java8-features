@@ -758,6 +758,60 @@ public class Demo {
     // output: (Adam-Jenny-Emily-Dave-Sophia-James)
   ```
 
+#### Operation: Collectors.counting()
+
+* Returns the total number of elements as a result
+* If not elements are present then return 0
+* `public static <T> Collector<T, ?, Long> counting()`
+  ```java
+    public static long counting() {
+        return StudentDataBase.getAllStudents()
+                .stream()
+                .filter(student -> student.getGender().equalsIgnoreCase("female"))
+                .collect(Collectors.counting())
+                ;
+    }
+  // output: 3
+  ```
+
+#### Operation: Collectors.mapping()
+
+* Applies a transformation function first and then collects the data in a collection (of any Type -> List, Set ...)
+* `public static <T, U, A, R>
+       Collector<T, ?, R> mapping(Function<? super T, ? extends U> mapper,
+                                  Collector<? super U, A, R> downstream)`
+  ```java
+    List<String> mapsStudentsNamesToList = StudentDataBase.getAllStudents()
+                                                                .stream()
+                                                                .collect(Collectors.mapping(Student::getName, Collectors.toList()))
+                                                    ;
+    System.out.println("Mapping students names to list of String : " + mapsStudentsNamesToList);
+
+
+    Set<String> mapsStudentsNamesToSet = StudentDataBase.getAllStudents()
+                .stream()
+                .collect(Collectors.mapping(Student::getName, Collectors.toSet()))
+                ;
+    System.out.println("Mapping students names to set of String : " + mapsStudentsNamesToSet);
+  ```
+* Above is the same as
+  ```java
+    List<String> mapsStudentsNamesToList = StudentDataBase.getAllStudents()
+                                                                .stream()
+                                                                .map(Student::getName)
+                                                                .collect(Collectors.toList())
+                                                    ;
+    System.out.println("Mapping students names to list of String : " + mapsStudentsNamesToList);
+
+
+    Set<String> mapsStudentsNamesToSet = StudentDataBase.getAllStudents()
+                .stream()
+                .map(Student::getName)
+                .collect(Collectors.toSet())
+                ;
+    System.out.println("Mapping students names to set of String : " + mapsStudentsNamesToSet);
+  ```
+
 ## Numeric Streams
  
 * A sequence of primitive int-valued elements supporting sequential and parallel aggregate operations.  
