@@ -838,6 +838,28 @@ public class Demo {
     }
   ```
 
+#### Operation: Collectors.summing\[Int|Long|Double\]() and Collectors.averaging\[Int|Long|Double\]()
+
+* Applies to `summingInt`, `summingLong` and `summingDouble` 
+* `Collectors.summing[Int|Long|Double]` collectors returns the sum as a result
+  ```java
+    public static int sumOfNotebooks() {
+        return StudentDataBase.getAllStudents()
+                .stream()
+                .collect(Collectors.summingInt(Student::getNoteBooks))
+                ;
+    }
+  ```
+* `Collectors.averaging[Int|Long|Double]` collectors returns the average as a primitive `double` 
+  ```java
+    public static double averageOfNotebooks() {
+        return StudentDataBase.getAllStudents()
+                .stream()
+                .collect(Collectors.averagingInt(Student::getNoteBooks))
+                ;
+    }
+  ```
+
 ## Numeric Streams
  
 * A sequence of primitive int-valued elements supporting sequential and parallel aggregate operations.  
