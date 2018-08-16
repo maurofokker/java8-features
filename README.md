@@ -750,3 +750,25 @@ public class Demo {
     ```java
       IntStream.rangeClosed(1,50) // return from 1 to 50 inclusive (50 elements)
     ```
+
+### Aggregate Operations: sum() - max() - min() - average()
+
+* `sum()`
+  * It is a terminal operation
+  * Returns the sum of elements in this stream (`int` for `IntStream`, `long` for `LongStream` and `double` for `DoubleStream`)
+  * Special case of `reduction`
+    ```java
+      return reduce(0, Integer::sum);
+    ```
+* `min()`
+  * Terminal operation
+  * Returns an `OptionalInt` for `IntStream`, `OptionalLong` for `LongStream` and `OptionalDouble` for `DoubleStream` 
+    describing the minimum element of this stream, or an empty optional if this stream is empty
+* `max()`
+  * Terminal operation
+  * Returns an `OptionalInt` for `IntStream`, `OptionalLong` for `LongStream` and `OptionalDouble` for `DoubleStream` 
+    describing the maximum element of this stream, or an empty optional if this stream is empty
+* `average()`
+  * It is a terminal operation
+  * Returns an `OptionalDouble` describing the arithmetic mean of elements of this stream, 
+    or an empty optional if this stream is empty. This is the same for `IntStream`, `LongStream` and `DoubleStream`  
