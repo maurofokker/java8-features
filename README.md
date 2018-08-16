@@ -714,6 +714,50 @@ public class Demo {
                       .forEach(System.out::println);
       ```
 
+### Terminal Operators in collect()
+
+* They collects the data if the stream
+* Receives an input of type `Collector`
+* Produces the result as the input is passed to the method
+* It accumulates the result until the stream is exhausted
+
+#### Operation: Collectors.joining()
+
+* Performs the String concatenation on the elements of the Stream
+* It has 3 overloaded methods
+  * `public static Collector<CharSequence, ?, String> joining()`
+  ```java
+    public static String joiningStudentsNames() {
+        return StudentDataBase.getAllStudents()
+                .stream()  // Stream<Student>
+                .map(Student::getName) // Stream<String>
+                .collect(Collectors.joining());
+    }
+  // output: AdamJennyEmilyDaveSophiaJames
+  ```
+  * `public static Collector<CharSequence, ?, String> joining(CharSequence delimiter)`
+  ```java
+      public static String joiningStudentsNamesWithDelimiter() {
+          return StudentDataBase.getAllStudents()
+                  .stream()  // Stream<Student>
+                  .map(Student::getName) // Stream<String>
+                  .collect(Collectors.joining("-"));
+      }
+    // output: Adam-Jenny-Emily-Dave-Sophia-James
+  ```
+  * `public static Collector<CharSequence, ?, String> joining(CharSequence delimiter,
+                                                                  CharSequence prefix,
+                                                                  CharSequence suffix)`
+  ```java
+      public static String joiningStudentsNamesWithDelimiterPrefixAndSufix() {
+          return StudentDataBase.getAllStudents()
+                  .stream()  // Stream<Student>
+                  .map(Student::getName) // Stream<String>
+                  .collect(Collectors.joining("-", "(", ")"));
+      }
+    // output: (Adam-Jenny-Emily-Dave-Sophia-James)
+  ```
+
 ## Numeric Streams
  
 * A sequence of primitive int-valued elements supporting sequential and parallel aggregate operations.  
