@@ -6,7 +6,7 @@ import com.maurofokker.java8.data.StudentDataBase;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class GroupingByDemo {
+public class CollectorsGroupingByDemo {
 
     public static void main(String[] args) {
 

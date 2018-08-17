@@ -4,7 +4,7 @@ import com.maurofokker.java8.data.StudentDataBase;
 
 import java.util.stream.Collectors;
 
-public class CollectotsCountingDemo {
+public class CollectorsCountingDemo {
 
     public static void main(String[] args) {
 
