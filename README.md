@@ -859,6 +859,7 @@ public class Demo {
                 ;
     }
   ```
+
 #### Operation: Collectors.groupingBy()
 
 * It is equivalent to `groupBy()` function in `SQL`
@@ -946,6 +947,41 @@ public class Demo {
   // output
   {Adam=[Student{name='Adam', gradeLevel=2, gpa=3.6, gender='male', activities=[swimming, basketball, volleyball], noteBooks=4}], Jenny=[Student{name='Jenny', gradeLevel=2, gpa=3.8, gender='female', activities=[swimming, gymnastics, soccer], noteBooks=3}], Emily=[Student{name='Emily', gradeLevel=3, gpa=4.0, gender='female', activities=[swimming, gymnastics, aerobics], noteBooks=6}], Dave=[Student{name='Dave', gradeLevel=3, gpa=3.9, gender='male', activities=[swimming, gymnastics, soccer], noteBooks=3}], Sophia=[Student{name='Sophia', gradeLevel=4, gpa=3.5, gender='female', activities=[swimming, dancing, football], noteBooks=1}], James=[Student{name='James', gradeLevel=4, gpa=3.9, gender='male', activities=[swimming, basketball, baseball, football], noteBooks=2}]}
   ```
+
+#### Operation: Collectors.partitioningBy()
+
+* Returns a `Collector` which partitions the input elements according to a `Predicate`, and organizes them into a`Map<Boolean, List<T>>`
+  * In other words, accepts a `Predicate` as an input and return type of the collector is gonna be `Map<K, V>` where the key is a `Boolean`
+* There are no guarantees on the type, mutability, serializability, or thread-safety of the `Map` returned
+* `partitioningBy(Predicate)`
+  ```java
+    public static void partitioningByStudentsWithGpaGE3_8() {
+        Predicate<Student> studentsWithGpaGreaterThan3_8 = student -> student.getGpa() >= 3.8;
+        Map<Boolean, List<Student>> booleanListMap = StudentDataBase.getAllStudents()
+                .stream()
+                .collect(partitioningBy(studentsWithGpaGreaterThan3_8));
+        System.out.println(booleanListMap);
+    }
+  ```
+  
+  ```
+    // output: key=false students that doesnt match predicate key=true are students that match predicate
+    {false=[Student{name='Adam', gradeLevel=2, gpa=3.6, gender='male', activities=[swimming, basketball, volleyball], noteBooks=4}, Student{name='Sophia', gradeLevel=4, gpa=3.5, gender='female', activities=[swimming, dancing, football], noteBooks=1}], true=[Student{name='Jenny', gradeLevel=2, gpa=3.8, gender='female', activities=[swimming, gymnastics, soccer], noteBooks=3}, Student{name='Emily', gradeLevel=3, gpa=4.0, gender='female', activities=[swimming, gymnastics, aerobics], noteBooks=6}, Student{name='Dave', gradeLevel=3, gpa=3.9, gender='male', activities=[swimming, gymnastics, soccer], noteBooks=3}, Student{name='James', gradeLevel=4, gpa=3.9, gender='male', activities=[swimming, basketball, baseball, football], noteBooks=2}]}
+  ```
+* `partitioningBy(Predicate, Collector)`
+  ```java
+    public static void partitioningByStudentsWithGpaGE3_8_toSetCollector() {
+        Predicate<Student> studentsWithGpaGreaterThan3_8 = student -> student.getGpa() >= 3.8;
+        Map<Boolean, Set<Student>> booleanListMap = StudentDataBase.getAllStudents()
+                .stream()
+                .collect(partitioningBy(
+                        studentsWithGpaGreaterThan3_8   // predicate
+                        , Collectors.toSet()            // downstream
+                        ));
+        System.out.println(booleanListMap);
+    }
+  ```
+
 
 ## Numeric Streams
  
