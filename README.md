@@ -859,6 +859,93 @@ public class Demo {
                 ;
     }
   ```
+#### Operation: Collectors.groupingBy()
+
+* It is equivalent to `groupBy()` function in `SQL`
+* Used to group elements based on a property
+* The output is going to be a `Map<K, V>`
+
+* `groupingBy(Function classifier)`
+  ```java
+    public static void groupingStudentsByGender() {
+        Map<String, List<Student>> studentsByGender = StudentDataBase.getAllStudents()
+                .stream()
+                .collect(Collectors.groupingBy(Student::getGender))
+                ;
+        System.out.println(studentsByGender);
+    }
+  ```
+  ```
+  // output
+  {female=[Student{name='Jenny', gradeLevel=2, gpa=3.8, gender='female', activities=[swimming, gymnastics, soccer], noteBooks=3}, Student{name='Emily', gradeLevel=3, gpa=4.0, gender='female', activities=[swimming, gymnastics, aerobics], noteBooks=6}, Student{name='Sophia', gradeLevel=4, gpa=3.5, gender='female', activities=[swimming, dancing, football], noteBooks=1}], male=[Student{name='Adam', gradeLevel=2, gpa=3.6, gender='male', activities=[swimming, basketball, volleyball], noteBooks=4}, Student{name='Dave', gradeLevel=3, gpa=3.9, gender='male', activities=[swimming, gymnastics, soccer], noteBooks=3}, Student{name='James', gradeLevel=4, gpa=3.9, gender='male', activities=[swimming, basketball, baseball, football], noteBooks=2}]}
+  ```
+
+* `groupingBy(Function classifier, Collector downstream)`
+  ```java
+    public static void groupingByGradeLevelAndByGpa() {
+        Map<Integer, Map<String, List<Student>>> students =  StudentDataBase.getAllStudents()
+                .stream()
+                .collect(Collectors.groupingBy(
+                        Student::getGradeLevel      // classifier
+                        , Collectors.groupingBy(student -> student.getGpa() >= 3.8 ? "EXCELLENT" : "AVERAGE") // downstream
+                ))
+        ;
+        System.out.println(students);
+    }
+  ```
+  ```
+  // output
+  {2={AVERAGE=[Student{name='Adam', gradeLevel=2, gpa=3.6, gender='male', activities=[swimming, basketball, volleyball], noteBooks=4}], EXCELLENT=[Student{name='Jenny', gradeLevel=2, gpa=3.8, gender='female', activities=[swimming, gymnastics, soccer], noteBooks=3}]}, 3={EXCELLENT=[Student{name='Emily', gradeLevel=3, gpa=4.0, gender='female', activities=[swimming, gymnastics, aerobics], noteBooks=6}, Student{name='Dave', gradeLevel=3, gpa=3.9, gender='male', activities=[swimming, gymnastics, soccer], noteBooks=3}]}, 4={AVERAGE=[Student{name='Sophia', gradeLevel=4, gpa=3.5, gender='female', activities=[swimming, dancing, football], noteBooks=1}], EXCELLENT=[Student{name='James', gradeLevel=4, gpa=3.9, gender='male', activities=[swimming, basketball, baseball, football], noteBooks=2}]}}
+  ```
+  * Another use is to pass `Collectors.maxBy` and `Collectors.minBy` as second parameter 
+    ```java
+    // using maxBy as Collector in groupingBy
+    public static void studentWithMaxGpaByGrade() {
+        Map<Integer, Optional<Student>> studentWithMaxGpaByGrade = StudentDataBase.getAllStudents()
+                .stream()
+                .collect(Collectors.groupingBy(
+                        Student::getGradeLevel
+                        , Collectors.maxBy(Comparator.comparing(Student::getGpa))
+                ));
+        System.out.println(studentWithMaxGpaByGrade);
+    }
+    ```
+    ```
+    {2=Optional[Student{name='Jenny', gradeLevel=2, gpa=3.8, gender='female', activities=[swimming, gymnastics, soccer], noteBooks=3}], 3=Optional[Student{name='Emily', gradeLevel=3, gpa=4.0, gender='female', activities=[swimming, gymnastics, aerobics], noteBooks=6}], 4=Optional[Student{name='James', gradeLevel=4, gpa=3.9, gender='male', activities=[swimming, basketball, baseball, football], noteBooks=2}]}
+    ```
+    
+    ```java
+      // using collectingAndThen() to get the actual object and not an Optional
+      public static void studentWithMinGpaByGrade() {
+          Map<Integer, Student> studentWithMinGpaByGradeWithoutOptional = StudentDataBase.getAllStudents()
+                    .stream()
+                    .collect(Collectors.groupingBy(
+                            Student::getGradeLevel
+                            , Collectors.collectingAndThen(Collectors.minBy(Comparator.comparing(Student::getGpa))
+                                    , Optional::get
+                            )
+                    ));
+          System.out.println(studentWithMinGpaByGradeWithoutOptional);
+      }
+    ```
+ 
+* `groupingBy(Function classifier, Supplier mapFactory, Collector downstream)`
+  ```java
+    public static void groupingStudentsByNameInLinkedHashMap() {
+        LinkedHashMap<String, Set<Student>> groupingByName = StudentDataBase.getAllStudents()
+                .stream()
+                .collect(Collectors.groupingBy(
+                        Student::getName        // classifier  --> it is going to be the key (String)
+                        , LinkedHashMap::new    // supplier mapFactory override into LinkedHashMap --> what king of collection is gonna return
+                        , Collectors.toSet()    // downstream  --> what is the value for the output that is going to generate
+                ));
+        System.out.println(groupingByName);
+    }
+  ```
+  ```
+  // output
+  {Adam=[Student{name='Adam', gradeLevel=2, gpa=3.6, gender='male', activities=[swimming, basketball, volleyball], noteBooks=4}], Jenny=[Student{name='Jenny', gradeLevel=2, gpa=3.8, gender='female', activities=[swimming, gymnastics, soccer], noteBooks=3}], Emily=[Student{name='Emily', gradeLevel=3, gpa=4.0, gender='female', activities=[swimming, gymnastics, aerobics], noteBooks=6}], Dave=[Student{name='Dave', gradeLevel=3, gpa=3.9, gender='male', activities=[swimming, gymnastics, soccer], noteBooks=3}], Sophia=[Student{name='Sophia', gradeLevel=4, gpa=3.5, gender='female', activities=[swimming, dancing, football], noteBooks=1}], James=[Student{name='James', gradeLevel=4, gpa=3.9, gender='male', activities=[swimming, basketball, baseball, football], noteBooks=2}]}
+  ```
 
 ## Numeric Streams
  
